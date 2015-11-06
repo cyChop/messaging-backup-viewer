@@ -16,14 +16,22 @@
  */
 package org.keyboardplaying.messaging;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.SpringApplication;
 
 /**
- * The configuration for the viewer.
+ * The launcher class for the viewer.
  *
  * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
-@SpringBootApplication
-public class Application {
-    // here the configuration
+public class Launcher {
+
+    /**
+     * Runs the application.
+     *
+     * @param args
+     *            optional arguments (none expected)
+     */
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 }
