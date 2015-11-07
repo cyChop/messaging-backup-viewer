@@ -23,8 +23,10 @@ import org.springframework.boot.SpringApplication;
  *
  * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
-public class Launcher {
+public final class Launcher {
 
+    private Launcher() {}
+    
     /**
      * Runs the application.
      *
