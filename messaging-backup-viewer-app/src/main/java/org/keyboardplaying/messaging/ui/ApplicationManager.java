@@ -26,6 +26,7 @@ import java.awt.SystemTray;
 import java.awt.TrayIcon;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import org.keyboardplaying.messaging.ui.icon.IconSize;
 import org.keyboardplaying.messaging.ui.icon.ImageLoader;
@@ -39,9 +40,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApplicationManager {
 
+    private TrayIcon trayIcon;
+
     @PostConstruct
     public void loadManager() {
-        if (!SystemTray.isSupported()) { // FIXME why is it true on Win 7 ?!
+        if (!SystemTray.isSupported()) {
             System.out.println("SystemTray is not supported");
             // FIXME make a window instead
         } else {
@@ -49,11 +52,16 @@ public class ApplicationManager {
         }
     }
 
+    @PreDestroy
+    public void destroy() {
+        destroyTrayIcon();
+    }
+
     private void makeTrayIcon() {
         ImageLoader imgLoader = new ImageLoader();
 
         Image icon = imgLoader.getImage("messaging", IconSize.W_16);
-        TrayIcon trayIcon = new TrayIcon(icon);
+        trayIcon = new TrayIcon(icon);
         int width = trayIcon.getSize().width;
         if (width > 16) {
             icon = imgLoader.getImage("messaging", IconSize.W_32);
@@ -68,6 +76,12 @@ public class ApplicationManager {
             SystemTray.getSystemTray().add(trayIcon);
         } catch (AWTException e) {
             System.out.println("TrayIcon could not be added.");
+        }
+    }
+
+    private void destroyTrayIcon() {
+        if (trayIcon != null) {
+            SystemTray.getSystemTray().remove(trayIcon);
         }
     }
 

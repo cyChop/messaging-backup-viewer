@@ -25,8 +25,9 @@ import org.springframework.boot.SpringApplication;
  */
 public final class Launcher {
 
-    private Launcher() {}
-    
+    private Launcher() {
+    }
+
     /**
      * Runs the application.
      *
@@ -34,6 +35,8 @@ public final class Launcher {
      *            optional arguments (none expected)
      */
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication application = new SpringApplication(Application.class);
+        application.setHeadless(false);
+        application.run(args);
     }
 }
